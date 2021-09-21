@@ -1,0 +1,28 @@
+<div class="mt-4">
+   <div class="row" >
+      <div class="col-lg-3">
+         <h1>Bạn đã học khóa học này!</h1>
+         <button>Học ngay</button>
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" href="/">{{course.level}}</a>
+            </li>
+            <li class="nav-item active">
+               <a class="nav-link" href="/">Tổng số 24 video</a>
+            </li>
+            <li class="nav-item active">
+               <a class="nav-link" href="/">Cần 6h12p để học</a>
+            </li>
+            <li class="nav-item active">
+               <a class="nav-link" href="/">Truy cập mọi lúc mọi nơi</a>
+            </li>
+         </ul>
+      </div>
+
+      <div class="col-lg-9">
+         <h2>{{course.name}}</h2>
+         <iframe width="727" height="409" src="https://www.youtube.com/embed/{{course.videoId}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         <p>{{course.description}}</p>
+      </div>
+   </div>
+</div>

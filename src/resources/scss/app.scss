@@ -1,0 +1,16 @@
+@import 'variables';
+
+.header {
+    color: green;
+}
+.container {
+    color: $red-color;
+}
+.footer {
+    color: rgb(20, 63, 141);
+}
+.user-avatar{
+    width: 20px;
+    height: 25px;
+    border-radius: 20%;
+}

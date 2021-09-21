@@ -1,0 +1,25 @@
+.header {
+  color: green;
+}
+
+.container {
+  color: blue;
+}
+
+.footer {
+  color: #2d0080;
+}
+.logo {
+  width: 35px;
+  height: 35px;
+  border-radius: 20%;
+}
+.user-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.checkbox-options{
+  width: 220px;
+  margin: 0;
+}

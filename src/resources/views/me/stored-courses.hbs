@@ -21,7 +21,8 @@
       <table class="table mt-4">
          <thead>
             <tr>
-               <th scope="col" colspan="2"></th>
+               <th scope="col"></th>
+               <th scope="col">STT</th>
                <th scope="col">Tên khóa học</th>
                <th scope="col">Mô tả</th>
                <th scope="col">Cấp độ</th>
@@ -34,7 +35,7 @@
             {{#each courses}}
             <tr>
                <td>
-               <div class="form-check ">
+                  <div class="form-check ">
                      <input class="form-check-input" type="checkbox" name="courseIds[]"value="{{this._id}}">
                   </div>
                </td>

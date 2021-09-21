@@ -15,7 +15,7 @@ const Course = new Schema(
     deleteAt: { type: Date },
   },
   {
-    timestamps: true,
+    timestamps: true, // bản 5. trở lên nó hổ trợ render ra ngày nhập data
   }
 );
 

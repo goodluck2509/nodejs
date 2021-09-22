@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const slug = require("mongoose-slug-generator");
 const mongooseDelete = require("mongoose-delete");
 
-const Course = new Schema(
+const CourseSchema = new Schema(
   {
     // Check điều kiện ở tầng model mình phải check validator khi nhập lên mới đúng hơn
     name: { type: String, require: true },
@@ -18,10 +18,23 @@ const Course = new Schema(
     timestamps: true, // bản 5. trở lên nó hổ trợ render ra ngày nhập data
   }
 );
+// Custom query helpers
+CourseSchema.query.sortable = function (req) {
+  if (req.query.hasOwnProperty("_sort")) {
+    const isValidtype = ["asc", "desc"].includes(req.query.type);
 
+    return this.sort({
+      [req.query.column]: isValidtype ? req.query.type : "desc",
+    });
+  }
+  return this;
+};
 //Add plugin
 mongoose.plugin(slug);
 
-Course.plugin(mongooseDelete, { overrideMethods: "all", deletedAt: true });
+CourseSchema.plugin(mongooseDelete, {
+  overrideMethods: "all",
+  deletedAt: true,
+});
 
-module.exports = mongoose.model("Course", Course);
+module.exports = mongoose.model("Course", CourseSchema);

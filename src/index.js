@@ -2,38 +2,46 @@ const path = require("path");
 const express = require("express"); // ex.. là thư viện mình tải khi nãy
 const db = require("./config/db/index");
 const methodOverride = require("method-override");
+
+//Impor handlebars helpers
+const helpers = require("./helpers/handlebars");
 // Connect
 db.connect();
 
 // var morgan = require('morgan');
 const handlebars = require("express-handlebars");
+const SortMiddleware = require("./app/middlewares/SortMiddleware");
+
 const app = express();
 const port = 3000;
 
 const route = require("./routers"); // 1
 
-      //-----Chỉ để test middleware (hàm function dưới xử lí các tác vụ)
-            app.get(
-              "/middleware",
-              //Hàm xử lí (middleware) có số lượng bất kỳ
-              function (req, res, next) {
-                if (["vethuong", "vevip"].includes(req.query.ve)) {
-                  req.face = "Phần chỉnh sửa và thay đổi";
-                  next(); //hàm này để nó chạy qua middleware tiếp theo
-                }
-                res.status(403).json({
-                  message: "Access denied",
-                });
-                next();
-              },
-              function (req, res, next) {
-                res.json({
-                  message: "Successfully!!",
-                  face: req.face,
-                });
-              }
-            );
-      //==========================================
+//-----Chỉ để test middleware (hàm function dưới xử lí các tác vụ)
+app.get(
+  "/middleware",
+  //Hàm xử lí (middleware) có số lượng bất kỳ
+  function (req, res, next) {
+    if (["vethuong", "vevip"].includes(req.query.ve)) {
+      req.face = "Phần chỉnh sửa và thay đổi";
+      next(); //hàm này để nó chạy qua middleware tiếp theo
+    }
+    res.status(403).json({
+      message: "Access denied",
+    });
+    next();
+  },
+  function (req, res, next) {
+    res.json({
+      message: "Successfully!!",
+      face: req.face,
+    });
+  }
+);
+//==========================================
+
+// Custom middlewares
+app.use(SortMiddleware);
 // use static folder
 //Đánh chặn request xác định có phải file tĩnh ko (nếu file tĩnh nó đều hướng sang public)
 app.use(express.static(path.join(__dirname, "public")));
@@ -50,9 +58,7 @@ app.engine(
   "hbs",
   handlebars({
     extname: ".hbs",
-    helpers: {
-      sum: (a, b) => a + b, // Custom funcion ở đây chứ thằng handlebar nó ko cho code trong html
-    },
+    helpers: helpers,
   })
 );
 //chuyển đổi HTTP từ phương thức post sang put để sửa dữ liệu

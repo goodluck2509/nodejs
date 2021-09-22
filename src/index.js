@@ -12,7 +12,33 @@ const port = 3000;
 
 const route = require("./routers"); // 1
 
+      //-----Chỉ để test middleware (hàm function dưới xử lí các tác vụ)
+            app.get(
+              "/middleware",
+              //Hàm xử lí (middleware) có số lượng bất kỳ
+              function (req, res, next) {
+                if (["vethuong", "vevip"].includes(req.query.ve)) {
+                  req.face = "Phần chỉnh sửa và thay đổi";
+                  next(); //hàm này để nó chạy qua middleware tiếp theo
+                }
+                res.status(403).json({
+                  message: "Access denied",
+                });
+                next();
+              },
+              function (req, res, next) {
+                res.json({
+                  message: "Successfully!!",
+                  face: req.face,
+                });
+              }
+            );
+      //==========================================
+// use static folder
+//Đánh chặn request xác định có phải file tĩnh ko (nếu file tĩnh nó đều hướng sang public)
 app.use(express.static(path.join(__dirname, "public")));
+//1 middleware bắt các "rượu" submit từ form lên
+//nó cấu trúc lại lưu vào 1 obj (body)
 app.use(
   express.urlencoded({
     extended: true,
@@ -40,6 +66,6 @@ route(app); // 2 // Dùng thằng này để truyền chia nhỏ ra dễ quản 
 
 // HTTP logger
 // app.use(morgan('combined'));
-// app.listen(port, () => {
-//   console.log(`App listening at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
